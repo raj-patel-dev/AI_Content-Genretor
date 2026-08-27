@@ -3,7 +3,7 @@ import axios from 'axios';
 export const registerAPI = async (userData) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/v1/users/register",
+      "https://ai-content-genretor.onrender.com/api/v1/users/register",
       {
         email: userData.email,
         password: userData.password,
@@ -23,7 +23,7 @@ export const registerAPI = async (userData) => {
 
 export const loginAPI = async (userData) => {
     try {
-        const response = await axios.post("http://localhost:5000/api/v1/users/login",
+        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/users/login",
             {
                 email:userData?.email,
                 password:userData?.password,
@@ -40,7 +40,7 @@ export const loginAPI = async (userData) => {
 
 export const checkUserAuthStatusAPI = async () => {
     try {
-        const response = await axios.get("http://localhost:5000/api/v1/users/auth/check",
+        const response = await axios.get("https://ai-content-genretor.onrender.com/api/v1/users/auth/check",
             {
                 withCredentials:true
             }
@@ -53,7 +53,7 @@ export const checkUserAuthStatusAPI = async () => {
 
 export const logoutAPI = async () => {
      try {
-        const response = await axios.post("http://localhost:5000/api/v1/users/logout",
+        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/users/logout",
             {},
             {
                 withCredentials:true
@@ -67,7 +67,7 @@ export const logoutAPI = async () => {
 
 export const getUserProfileAPI = async () => {
      try {
-        const response = await axios.get("http://localhost:5000/api/v1/users/profile",
+        const response = await axios.get("https://ai-content-genretor.onrender.com/api/v1/users/profile",
             {
                 withCredentials:true
             }

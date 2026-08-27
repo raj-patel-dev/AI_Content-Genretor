@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const Chatgpt = async (userPrompt) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/v1/ai/generate-content",
+    const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/ai/generate-content",
         {
             prompt :userPrompt,
         },

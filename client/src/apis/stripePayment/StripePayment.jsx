@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const handleFreeSubscriptonAPI = async() => {
     try {
-        const response = await axios.post("http://localhost:5000/api/v1/stripe/free-plan",
+        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/stripe/free-plan",
             {},
             {
                 withCredentials:true
@@ -18,7 +18,7 @@ export const handleFreeSubscriptonAPI = async() => {
 export const createStripePaymentAPI = async (payment) => {
     console.log("Payment data in API : ",payment)
     try {
-        const response = await axios.post("http://localhost:5000/api/v1/stripe/checkout",
+        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/stripe/checkout",
             {
                 amount:Number(payment?.amount),
                 subscriptionPlan:payment?.plan
@@ -36,7 +36,7 @@ export const createStripePaymentAPI = async (payment) => {
 
 export const verifyPaymentAPI = async (paymentId) => {
     try {
-        const response = await axios.post(`http://localhost:5000/api/v1/stripe/verify-payment/${paymentId}`);
+        const response = await axios.post(`https://ai-content-genretor.onrender.com/api/v1/stripe/verify-payment/${paymentId}`);
 
         return response?.data;
     } catch(error) {
