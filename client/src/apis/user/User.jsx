@@ -3,7 +3,7 @@ import axios from 'axios';
 export const registerAPI = async (userData) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/v1/users/register",
+      "https://ai-writing-assisatant.onrender.com/api/v1/users/register",
       {
         email: userData.email,
         password: userData.password,
