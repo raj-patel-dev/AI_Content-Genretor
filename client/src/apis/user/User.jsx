@@ -1,18 +1,25 @@
 import axios from 'axios';
 
+const apiRequest = (config) => {
+  const token = localStorage.getItem('authToken');
+  return axios({
+    ...config,
+    withCredentials: true,
+    headers: token
+      ? { ...config.headers, Authorization: `Bearer ${token}` }
+      : config.headers,
+  });
+};
+
 export const registerAPI = async (userData) => {
   try {
-    const response = await axios.post(
+    const response = await apiRequest({ method: 'post', url:
       "https://ai-content-genretor.onrender.com/api/v1/users/register",
-      {
+      data: {
         email: userData.email,
         password: userData.password,
         name: userData.name,
-      },
-      {
-        withCredentials: true,
-      }
-    );
+      }});
 
     return response.data;
   } catch (error) {
@@ -23,15 +30,12 @@ export const registerAPI = async (userData) => {
 
 export const loginAPI = async (userData) => {
     try {
-        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/users/login",
-            {
+        const response = await apiRequest({ method: 'post', url: "https://ai-content-genretor.onrender.com/api/v1/users/login",
+            data: {
                 email:userData?.email,
                 password:userData?.password,
-            },
-            {
-                withCredentials:true
-            }
-        );
+            }});
+        if (response.data?.token) localStorage.setItem('authToken', response.data.token);
         return response?.data;
     } catch (error) {
         console.error("Error in login :",error);
@@ -41,11 +45,7 @@ export const loginAPI = async (userData) => {
 
 export const checkUserAuthStatusAPI = async () => {
     try {
-        const response = await axios.get("https://ai-content-genretor.onrender.com/api/v1/users/auth/check",
-            {
-                withCredentials:true
-            }
-        );
+        const response = await apiRequest({ method: 'get', url: "https://ai-content-genretor.onrender.com/api/v1/users/auth/check" });
         return response?.data;
     } catch (error) {
         console.error("Error in user Authentication :",error);
@@ -55,12 +55,8 @@ export const checkUserAuthStatusAPI = async () => {
 
 export const logoutAPI = async () => {
      try {
-        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/users/logout",
-            {},
-            {
-                withCredentials:true
-            }
-        );
+        const response = await apiRequest({ method: 'post', url: "https://ai-content-genretor.onrender.com/api/v1/users/logout", data: {} });
+        localStorage.removeItem('authToken');
         return response?.data;
     } catch (error) {
         console.error("Error in logout :",error);
@@ -70,11 +66,7 @@ export const logoutAPI = async () => {
 
 export const getUserProfileAPI = async () => {
      try {
-        const response = await axios.get("https://ai-content-genretor.onrender.com/api/v1/users/profile",
-            {
-                withCredentials:true
-            }
-        );
+        const response = await apiRequest({ method: 'get', url: "https://ai-content-genretor.onrender.com/api/v1/users/profile" });
         return response?.data;
     } catch (error) {
         console.error("Error to getting profile :",error);
