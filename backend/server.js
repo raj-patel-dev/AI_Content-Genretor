@@ -48,7 +48,7 @@ cron.schedule("0 0 1 * *",async () => {
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
-    origin : process.env.CLIENT_URL || "http://localhost:5173",
+    origin : process.env.CLIENT_URL,
     credentials:true,
 };
 
