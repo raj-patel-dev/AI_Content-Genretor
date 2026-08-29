@@ -11,8 +11,6 @@ import stripeRouter from "./routes/stripeRouter.js";
 import User from "./models/User.js";
 import connectDB from "./utils/connectDB.js";
 
-connectDB();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -60,6 +58,14 @@ app.use("/api/v1/stripe",stripeRouter);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
-})
+const startServer = async () => {
+    await connectDB();
+    app.listen(PORT, () => {
+        console.log(`Server is running on port http://localhost:${PORT}`);
+    });
+};
+
+startServer().catch((error) => {
+    console.error("Server startup failed:", error.message);
+    process.exitCode = 1;
+});

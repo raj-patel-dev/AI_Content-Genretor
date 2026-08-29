@@ -9,6 +9,6 @@ userRouter.post("/register",register);
 userRouter.post("/login",login);
 userRouter.post("/logout",logout);
 userRouter.get("/profile",isAuthanticated,userProfile); 
-userRouter.get("/auth/check",isAuthanticated,checkAuth);
+userRouter.get("/auth/check",checkAuth);
 
 export default userRouter;

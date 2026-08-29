@@ -21,7 +21,7 @@ const  Login = () => {
         if(isAuthenticated) {
             navigate("/dashboard");
         }
-    },[isAuthenticated]);
+    },[isAuthenticated, navigate]);
 
     const mutation = useMutation({
         mutationFn:loginAPI
@@ -34,7 +34,7 @@ const  Login = () => {
         },
         validationSchema:validationSchema,
         onSubmit: (values) => {
-    mutation.mutate(values);
+        mutation.mutate(values);
 }
     });
     useEffect(() => {
@@ -42,7 +42,7 @@ const  Login = () => {
             login();
             navigate("/dashboard");
         }
-    },[mutation.isSuccess]);
+    },[mutation.isSuccess, login, navigate]);
     return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8 m-4">

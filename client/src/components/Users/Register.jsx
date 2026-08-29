@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
 });
 
 const Registration = () => {
-    const {isAuthenticated,login} = useAuth();
+    const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,20 +35,11 @@ const Registration = () => {
         },
         validationSchema:validationSchema,
         onSubmit: (values) => {
-            console.log("Form values", values);
-            mutation.mutate(values);
-
-            setTimeout(()=> {
-                navigate("/login");
-            },5000);
+            mutation.mutate(values, {
+              onSuccess: () => navigate("/login"),
+            });
         }
     })
-
-    console.log(mutation.isSuccess);
-    console.log(mutation.isPending);
-    console.log(mutation.isError);
-    console.log(mutation.error);
-    console.log(mutation);
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900">

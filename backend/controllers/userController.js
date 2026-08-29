@@ -63,11 +63,12 @@ export const login = asyncHandler(async(req,res)=>{
       expiresIn:"3d",
     });
 
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
   httpOnly: true,
-  secure: false,
-  sameSite: "strict",
-  maxAge: 24 * 60 * 60 * 1000,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+  maxAge: 3 * 24 * 60 * 60 * 1000,
 });
 
     res.json({
@@ -81,7 +82,13 @@ export const login = asyncHandler(async(req,res)=>{
 });
 
 export const logout = asyncHandler(async(req,res) => {
-  res.cookie("token" , "" ,{maxAge:1});
+  const isProduction = process.env.NODE_ENV === "production";
+  res.cookie("token" , "" ,{
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+    maxAge: 0,
+  });
   res.status(200).json({message:"Logged out successfully" });
 });
 

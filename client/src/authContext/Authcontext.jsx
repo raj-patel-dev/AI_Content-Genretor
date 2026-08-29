@@ -10,11 +10,12 @@ export const AuthProvider = ({children}) => {
     const {isError,isLoading,data,isSuccess} = useQuery({
         queryFn:checkUserAuthStatusAPI,
         queryKey:["checkAuth"],
+        retry: false,
     });
 
     useEffect(() => {
         if(isSuccess) {
-            setIsAuthenticated(data?.isAuthenticated);
+            setIsAuthenticated(data?.isAuthenticated === true);
         }
     },
 [data,isSuccess]);

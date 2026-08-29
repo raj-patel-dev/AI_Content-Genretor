@@ -35,6 +35,7 @@ export const loginAPI = async (userData) => {
         return response?.data;
     } catch (error) {
         console.error("Error in login :",error);
+        throw error;
     }
 }
 
@@ -48,6 +49,7 @@ export const checkUserAuthStatusAPI = async () => {
         return response?.data;
     } catch (error) {
         console.error("Error in user Authentication :",error);
+        throw error;
     }
 }
 
@@ -62,6 +64,7 @@ export const logoutAPI = async () => {
         return response?.data;
     } catch (error) {
         console.error("Error in logout :",error);
+        throw error;
     }
 }
 
@@ -75,5 +78,6 @@ export const getUserProfileAPI = async () => {
         return response?.data;
     } catch (error) {
         console.error("Error to getting profile :",error);
+        throw error;
     }
 }
