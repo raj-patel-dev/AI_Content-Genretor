@@ -26,7 +26,7 @@ const userSchema = new mongo.Schema({
         },
         subscriptionPlan:{
             type:String,
-            enum:["Trial","Free","Premium"],
+            enum:["Trial","Free","Basic","Premium"],
             default:"Trial"
         },
         apiRequestCount:{

@@ -9,8 +9,10 @@ const  PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
     const paymentIntentID = searchParams.get("payment_intent");
 
-    const {isLoading,isError,data,isPending,isSuccess} =  useQuery({
-        queryFn:() => verifyPaymentAPI(paymentIntentID)
+    const {isLoading,isError,data} = useQuery({
+        queryKey: ["verify-payment", paymentIntentID],
+        queryFn: () => verifyPaymentAPI(paymentIntentID),
+        enabled: !!paymentIntentID,
     });
     console.log(data);
     return (

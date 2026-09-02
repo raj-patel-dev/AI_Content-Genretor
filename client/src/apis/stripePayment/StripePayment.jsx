@@ -1,45 +1,56 @@
-import axios from 'axios'
+import axios from 'axios';
 
-export const handleFreeSubscriptonAPI = async() => {
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
+export const handleFreeSubscriptonAPI = async () => {
     try {
-        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/stripe/free-plan",
+        const response = await axios.post(
+            `${BASE_URL}/api/v1/stripe/free-plan`,
             {},
             {
-                withCredentials:true
+                withCredentials: true,
             }
         );
         return response?.data;
-    } catch(error) {
-        console.error("Error handling free subscription: ",error);
+    } catch (error) {
+        console.error("Error handling free subscription: ", error);
+        throw error;
     }
-
-}
+};
 
 export const createStripePaymentAPI = async (payment) => {
-    console.log("Payment data in API : ",payment)
+    console.log("Payment data in API : ", payment);
     try {
-        const response = await axios.post("https://ai-content-genretor.onrender.com/api/v1/stripe/checkout",
+        const response = await axios.post(
+            `${BASE_URL}/api/v1/stripe/checkout`,
             {
-                amount:Number(payment?.amount),
-                subscriptionPlan:payment?.plan
+                amount: Number(payment?.amount),
+                subscriptionPlan: payment?.plan,
             },
             {
-                withCrentials:true,
+                withCredentials: true,
             }
-
         );
         return response?.data;
-    } catch(error) {
-        console.error("Error handling stripe payment: ",error);
+    } catch (error) {
+        console.error("Error handling stripe payment: ", error);
+        throw error;
     }
-}
+};
 
 export const verifyPaymentAPI = async (paymentId) => {
     try {
-        const response = await axios.post(`https://ai-content-genretor.onrender.com/api/v1/stripe/verify-payment/${paymentId}`);
+        const response = await axios.post(
+            `${BASE_URL}/api/v1/stripe/verify-payment/${paymentId}`,
+            {},
+            {
+                withCredentials: true,
+            }
+        );
 
         return response?.data;
-    } catch(error) {
-        console.error("Error verifying payment :",error);
+    } catch (error) {
+        console.error("Error verifying payment :", error);
+        throw error;
     }
-}
+};

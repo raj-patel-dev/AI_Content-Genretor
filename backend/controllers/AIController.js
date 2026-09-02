@@ -1,10 +1,14 @@
 import asyncHandler from "express-async-handler";
-import axios from "axios";
 import dotenv from "dotenv";
 import User from "../models/User.js";
 import ContentHistory from "../models/contentHistory.js";
+import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
+
+const AI = new GoogleGenAI({
+    apiKey: process.env.API_KEY,
+});
 
 export const AIController = asyncHandler(async (req, res) => {
     const { prompt } = req.body;
@@ -16,45 +20,45 @@ export const AIController = asyncHandler(async (req, res) => {
     }
 
     try {
-        console.log("Sending request to AI API...");
+        console.log("Sending request to Gemini...");
 
-        const response = await axios.post(
-            "https://genai.vedshil.com/v1/chat/completions",
-            {
-                model: "Kryonex-G",
-                messages: [
-                    {
-                        role: "system",
-                        content: "You are a helpful AI assistant.",
-                    },
-                    {
-                        role: "user",
-                        content: prompt,
-                    },
-                ],
-                max_tokens: 100,
-                temperature: 1,
+        const response = await AI.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                systemInstruction:
+                    "Respond in maximum 2 words. Strict output limit: 2 words. Do not exceed two words under any circumstances.",
+                maxOutputTokens: 100,
+                temperature: 0.3,
             },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        });
 
-        console.log("API Response:", response.data);
+        let rawContent = (response.text || "").trim();
+        if (!rawContent && response.candidates?.[0]?.content?.parts?.[0]?.text) {
+            rawContent = response.candidates[0].content.parts[0].text.trim();
+        }
 
-        const content =
-            response.data?.choices?.[0]?.message?.content?.trim() || "";
+        const words = rawContent.split(/\s+/).filter(Boolean);
+        const content = words.length > 0 ? words.slice(0, 2).join(" ") : "Content Generated";
 
-        // Save history (optional)
+        console.log("Gemini raw text:", JSON.stringify(rawContent));
+        console.log("Gemini 2-word output:", JSON.stringify(content));
+
+        if (!content) {
+            return res.status(500).json({
+                success: false,
+                message: "Gemini returned empty content",
+            });
+        }
+
         if (req.user?.id) {
             const newContent = await ContentHistory.create({
-                user: req.user?.id,
-                content,    
+                user: req.user.id,
+                content: content,
             });
-            console.log("History is saved", newContent);
+
+            console.log("History saved:", newContent);
+
             const userFound = await User.findById(req.user.id);
 
             if (userFound) {
@@ -69,14 +73,11 @@ export const AIController = asyncHandler(async (req, res) => {
             content,
         });
     } catch (error) {
-        console.error("AI Error:", error.response?.data || error.message);
+        console.error("Gemini Error:", error);
 
         return res.status(500).json({
             success: false,
-            message:
-                error.response?.data?.error?.message ||
-                error.response?.data?.message ||
-                error.message,
+            message: error.message || "Failed to generate content",
         });
     }
 });

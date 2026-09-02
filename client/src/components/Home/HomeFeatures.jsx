@@ -1,92 +1,53 @@
-  import React  from 'react';
-import ai1 from "../../assets/robot-with-wrench.png";
-import blink from "../../assets/blink-sm.png";
+import React from 'react';
+import { Card, Grid, Heading, Text, Tag, Flex } from "../once-ui";
+import { FaBrain, FaSlidersH, FaBolt } from "react-icons/fa";
+
+const featureList = [
+  {
+    icon: <FaBrain className="text-indigo-400 text-2xl" />,
+    title: "AI 2-Word Content Creation",
+    description: "Generates laser-focused, 2-word responses using Gemini 2.5 Flash API to deliver concise ideas instantly.",
+  },
+  {
+    icon: <FaSlidersH className="text-purple-400 text-2xl" />,
+    title: "Customizable Tone & Category",
+    description: "Tailor responses with distinct tones (Formal, Informal, Humorous) and categories (Tech, Health, Business).",
+  },
+  {
+    icon: <FaBolt className="text-emerald-400 text-2xl" />,
+    title: "Streamlined Workflow",
+    description: "Eliminate fluff and streamline ideation with rapid history tracking and fast credit processing.",
+  },
+];
 
 const HomeFeatures = () => {
-    return (
-        <>
-      <section className="relative py-12 md:py-24 lg:py-32 bg-gray-900 bg-body overflow-hidden">
-        <img
-          className="hidden sm:block absolute top-0 right-1/2 -mr-64 xl:mr-24 mt-12 h-20 animate-spinStar"
-          src={blink}
-          alt="Blink"
-        />
-        <img
-          className="hidden sm:block absolute bottom-0 right-0 mb-64 mr-8 h-20 animate-spinStar"
-          src={blink}
-          alt="Blink"
-        />
-        <div className="relative container mx-auto px-4">
-          <div className="flex flex-wrap items-center -mx-4">
-            <div className="w-full lg:w-2/5 xl:w-1/2 px-4 mb-8 lg:mb-0">
-              <img
-                className="block w-full max-w-md xl:max-w-lg"
-                src={ai1}
-                alt="Features bg"
-              />
-            </div>
-            <div className="w-full lg:w-3/5 xl:w-1/2 px-4">
-              <div className="relative overflow-hidden">
-                <div className="hidden xs:block absolute z-10 top-0 left-0 w-full h-20 lg:h-48 bg-gradient-to-b from-darkBlue-900 via-darkBlue-900 to-transparent opacity-90" />
-                <div className="hidden xs:block absolute z-10 bottom-0 left-0 w-full h-20 lg:h-48 bg-gradient-to-t from-darkBlue-900 via-darkBlue-900 to-transparent opacity-90" />
-                <div className="slider">
-                  <div className="slider-container">
-                    <div className="slide flex mb-16 items-start">
-                      <div className="flex-shrink-0 flex mr-8 items-center justify-center w-16 h-16 rounded-full bg-indigo-700">
-                        {/* Icon or image */}
-                      </div>
-                      <div className="max-w-lg">
-                        <h4 className="text-3xl font-medium text-white mb-8">
-                          AI-Powered Content Creation
-                        </h4>
-                        <p className="text-xl text-gray-400">
-                          Masync AI revolutionizes the way you create content.
-                          Our intelligent algorithms generate high-quality,
-                          engaging material, saving you time and enhancing your
-                          creative output.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="slide flex mb-16 items-start">
-                      <div className="flex-shrink-0 flex mr-8 items-center justify-center w-16 h-16 rounded-full bg-yellow-700">
-                        {/* Icon or image */}
-                      </div>
-                      <div className="max-w-lg">
-                        <h4 className="text-3xl font-medium text-white mb-8">
-                          Customizable for Your Needs
-                        </h4>
-                        <p className="text-xl text-gray-400">
-                          Whether it’s blog posts, marketing copy, or creative
-                          stories, Masync AI tailors content to your specific
-                          needs, ensuring each piece is perfectly suited for its
-                          purpose.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="slide flex items-start">
-                      <div className="flex-shrink-0 flex mr-8 items-center justify-center w-16 h-16 rounded-full bg-green-700">
-                        {/* Icon or image */}
-                      </div>
-                      <div className="max-w-lg">
-                        <h4 className="text-3xl font-medium text-white mb-8">
-                          Streamline Your Workflow
-                        </h4>
-                        <p className="text-xl text-gray-400">
-                          Integrating seamlessly with various platforms, Masync
-                          AI becomes a natural extension of your workflow,
-                          making content generation more efficient than ever
-                          before.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  return (
+    <section className="py-20 bg-slate-950 px-6 lg:px-8 border-t border-white/10 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+        <div className="text-center space-y-4 max-w-2xl mx-auto">
+          <Tag variant="brand" size="m">Features</Tag>
+          <Heading level={2} size="xl">Why Masync AI?</Heading>
+          <Text variant="tertiary" size="m">
+            Engineered for high efficiency, speed, and clean 2-word outputs.
+          </Text>
         </div>
-      </section>
-    </>
-    );
-}
+
+        <Grid cols={3} gap="6">
+          {featureList.map((item, index) => (
+            <Card key={index} variant="glass" padding="lg" className="space-y-4">
+              <Flex align="center" justify="center" className="w-12 h-12 bg-white/5 rounded-xl border border-white/10">
+                {item.icon}
+              </Flex>
+              <Heading level={3} size="m">{item.title}</Heading>
+              <Text variant="tertiary" size="sm" className="leading-relaxed">
+                {item.description}
+              </Text>
+            </Card>
+          ))}
+        </Grid>
+      </div>
+    </section>
+  );
+};
+
 export default HomeFeatures;

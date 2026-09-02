@@ -7,7 +7,7 @@ const stripeRouter = express.Router();
 
 stripeRouter.post("/checkout",isAuthanticated,handleStripePayment);
 stripeRouter.post("/free-plan",isAuthanticated,handleFreeSubscription);
-stripeRouter.post("/verify-payment/:paymrentId",isAuthanticated,verifyPayment);
+stripeRouter.post("/verify-payment/:paymentId",isAuthanticated,verifyPayment);
 
 export default stripeRouter;
 

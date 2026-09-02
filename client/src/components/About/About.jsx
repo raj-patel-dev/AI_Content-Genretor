@@ -1,63 +1,55 @@
-import React from 'react'
-import { LifebuoyIcon,NewspaperIcon,PhoneIcon } from '@heroicons/react/20/solid';
+import React from 'react';
+import { Card, Grid, Heading, Text, Tag, Flex } from "../once-ui";
+import { LifebuoyIcon, NewspaperIcon, PhoneIcon } from '@heroicons/react/20/solid';
 
 const cards = [
-   {
+  {
     name: "Innovative Solutions",
-    description:
-      "At Masync, innovation drives our solutions. We specialize in transforming complex AI technology into user-friendly tools for content generation, ensuring our clients stay ahead in the digital content race.",
+    description: "At Masync, innovation drives our solutions. We specialize in transforming complex AI technology into user-friendly tools for concise 2-word content generation.",
     icon: PhoneIcon,
   },
   {
-    name: "Dedicated Customer Support",
-    description:
-      "We believe in empowering our users with continuous support. Our dedicated team is always on standby to assist with any queries, ensuring a smooth, uninterrupted experience in content creation.",
+    name: "Dedicated Support",
+    description: "We empower users with continuous support. Our team is available to assist with any questions regarding credit usage or tier access.",
     icon: LifebuoyIcon,
   },
   {
-    name: "Press & Media Collaborations",
-    description:
-      "Masync is at the forefront of AI-driven content generation. We're eager to collaborate with media and press to share insights and developments in AI technology, shaping the future of digital content.",
+    name: "Media Collaborations",
+    description: "Masync is at the forefront of AI-driven content efficiency. We collaborate with partners to shape the future of high-impact micro-content.",
     icon: NewspaperIcon,
   },
 ];
- 
-export default function AboutUs() {
-    return (
-        <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
-      {/* Background and layout elements */}
-      {/* ... */}
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            Masync AI - Redefining Content Creation
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-300">
-            Masync AI is revolutionizing the way content is created. Our
-            cutting-edge AI technology automates and enhances content
-            generation, enabling creators to produce high-quality, engaging
-            material with ease.
-          </p>
+export default function AboutUs() {
+  return (
+    <div className="bg-slate-950 min-h-screen py-20 px-6 lg:px-8 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+        <div className="text-center space-y-4 max-w-3xl mx-auto">
+          <Tag variant="purple" size="m">About Masync AI</Tag>
+          <Heading level={1} size="xl">
+            Redefining Concise Content Creation
+          </Heading>
+          <Text variant="tertiary" size="l">
+            Masync AI automates and enhances content generation by delivering ultra-concise, high-impact 2-word outputs powered by state-of-the-art LLMs.
+          </Text>
         </div>
-        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
+
+        <Grid cols={3} gap="6">
           {cards.map((card) => (
-            <div
-              key={card.name}
-              className="flex gap-x-4 rounded-xl bg-white/5 p-6 ring-1 ring-inset ring-white/10"
-            >
-              <card.icon
-                className="h-7 w-5 flex-none text-indigo-400"
-                aria-hidden="true"
-              />
-              <div className="text-base leading-7">
-                <h3 className="font-semibold text-white">{card.name}</h3>
-                <p className="mt-2 text-gray-300">{card.description}</p>
-              </div>
-            </div>
+            <Card key={card.name} variant="glass" padding="lg" className="space-y-4">
+              <Flex align="center" gap="3">
+                <div className="p-2.5 bg-indigo-500/10 rounded-xl text-indigo-400 border border-indigo-500/20">
+                  <card.icon className="h-6 w-6" aria-hidden="true" />
+                </div>
+                <Heading level={3} size="m">{card.name}</Heading>
+              </Flex>
+              <Text variant="tertiary" size="sm" className="leading-relaxed">
+                {card.description}
+              </Text>
+            </Card>
           ))}
-        </div>
+        </Grid>
       </div>
     </div>
-    );
+  );
 }
